@@ -1,0 +1,311 @@
+﻿/*LAYOUT*/
+
+body {
+    background-color: #FFE1AA;
+    font-family: 'Fraunces', serif;
+}
+
+header {
+    background-color: #FFFEEF;
+    height: 80px;
+    font-size: 22px;
+    border-bottom: 3px solid #E80000;
+}
+
+main {
+    border-bottom: 3px solid #E80000;
+}
+
+.auth_container {
+    padding:9rem 2rem;
+}
+
+.auth_container a{
+    text-decoration: none;
+    color: black;
+}
+
+    .auth_container a:hover {
+        color: red;
+    }
+/*Utility*/
+.my_btn {
+    background-color: #FFFEEF;
+    border: 2px solid gray;
+}
+
+    .my_btn:hover {
+        color: blue;
+        border: 2px solid blue;
+    }
+
+.del_btn {
+    background-color: #FFFEEF;
+    border: 2px solid gray;
+}
+
+    .del_btn:hover {
+        color: #E80000;
+        border: 2px solid #E80000;
+    }
+
+.update_btn {
+    background-color: #FFFEEF;
+    border: 2px solid gray;
+}
+
+    .update_btn:hover {
+        color: green;
+        border: 2px solid green;
+    }
+
+.fake_form {
+    display: inline-block;
+}
+
+/*jumbotron*/
+.jumbotron {
+    max-width: 100%;
+    padding: 2rem;
+    height: 800px;
+    background-image: url(../img/jumbotron.jpg);
+    background-position: center;
+    background-size: cover
+}
+
+.jt-logo {
+    background-color: #ffe1aa9e;
+    width: 800px;
+    height: 300px;
+    margin: 0 auto;
+    border-radius: 5px;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    background-color: #FFFEEF;
+    height: 80px;
+}
+
+/*HEADER*/
+
+.nav-link {
+    color: black;
+}
+
+    .nav-link:hover {
+        color: #FFC978;
+    }
+
+.navbar-brand {
+    color: #E80000;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+a:hover {
+    color: #FFC978;
+}
+
+.nav-item {
+    font-size: 1rem;
+}
+
+.navbar-toggler-icon {
+    color: black;
+}
+
+.navbar-collapse {
+    background-color: #FFFEEF;
+}
+
+.ms_main_title {
+    color: #E80000;
+    font-weight: bold;
+}
+
+/*ADMIN LAYOUT*/
+
+.table td {
+    background-color: #FFC978;
+}
+
+.table th {
+    background-color: #FFC978;
+    color: #E80000;
+}
+
+.table img {
+    width: 120px;
+}
+
+.table tr {
+    border: 1px solid red;
+}
+/*ABOUT US SECTION*/
+.pizzeria {
+    padding: 4rem 0;
+    background-color: #FFFEEF;
+    border-top: 3px solid #E80000;
+    border-bottom: 3px solid #E80000;
+}
+
+.ms_container {
+    padding: 2rem 1rem;
+    width: 60%;
+    margin: 0 auto;
+    border: 3px solid #E80000;
+    box-shadow: 10px 10px #FFE1AA;
+    border-radius: 10px;
+}
+
+.pizzeria_img {
+    border: 2px solid #E80000;
+    border-radius: 10px;
+    box-shadow: 6px 6px #FFE1AA;
+    max-width: 50%;
+    max-height: 60%;
+}
+
+.slogan {
+    align-self: center;
+    color: #E80000;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+
+/*PIZZA CARD*/
+.my_card_container {
+    height: 70%
+}
+
+.card {
+    color: black;
+    background-color: #FFC978;
+    height: 100%;
+    border: 2px solid #E80000;
+    box-shadow: 8px 8px #e80000a3;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+}
+
+
+    .card:last-child {
+        justify-content: flex-end;
+    }
+
+.card-img img {
+    border-radius: 15px;
+    width: 100%;
+    height: 230px;
+}
+
+.card-title {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+    color: #E80000;
+}
+
+.card-subtitle {
+    font-size: 13px;
+}
+
+.card-divider {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-price {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+    .card-price span {
+        font-size: 25px;
+        font-weight: 500;
+    }
+
+.card-img:hover {
+    transform: translateY(-3px);
+}
+
+.details-btn {
+    background-color: #e80000c9;
+    color: wheat;
+}
+
+
+/*DETTAGLI PAGE*/
+.details_container {
+    border-top: 3px solid #E80000;
+    border-bottom: 3px solid #E80000;
+    padding: 4rem 0;
+    background-color: #FFE1AA;
+}
+
+.details_card {
+    color: black;
+    background-color: #FFFEEF;
+    border: 3px solid #E80000;
+    box-shadow: 15px 15px #FFC978;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 10px;
+}
+
+/*NOT FOUND PAGE*/
+
+.not_found {
+    background-color: #FFE1AA;
+}
+
+.not_found_details {
+    padding: 2rem 0;
+}
+
+.nf_error {
+    font-size: 2.5rem;
+}
+
+.nf_message {
+    font-size: 1.2rem;
+}
+
+.auth_action {
+    padding: 4rem 0;
+}
+
+/*MEDIA QUERY*/
+
+
+@media screen and (max-width: 985px) {
+    .ms_container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pizzeria_img {
+        border: 2px solid #E80000;
+        border-radius: 10px;
+        box-shadow: 10px 10px #FFE1AA;
+        max-width: 100%;
+    }
+}

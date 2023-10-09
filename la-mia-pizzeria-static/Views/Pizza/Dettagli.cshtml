@@ -1,0 +1,57 @@
+﻿@model Pizza
+
+<div class="jumbotron d-flex align-items-center">
+    <div class="jt-logo d-flex align-items-center justify-content-center">
+        PIZZERIA DELLA MADONNA
+    </div>
+</div>
+<div class="details_container">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="col-lg-4 col-sm-12">
+                <div class="details_card">
+                    <div class="card-img">
+                        <img src="@Model.Image" />
+                    </div>
+                    <hr class="card-divider">
+                    <div class="card-title">@Model.Taste</div>
+                    <p>
+                        <strong>Categoria:</strong>
+                        @if (Model.Category != null)
+                        {
+                            <span>@Model.Category.Name</span>
+                        }
+                        else
+                        {
+                            <span>Nessuna categoria associata</span>
+                        }
+                    </p>
+                    <p>
+                        <strong>Ingredienti:</strong>
+                        @if (Model.Ingredients != null && Model.Ingredients.Count > 0)
+                        {
+                            <ul class=" d-flex list-unstyled">
+                                @foreach (Ingredient ingredient in Model.Ingredients)
+                                {
+                                    <li class="me-1">
+                                        @ingredient?.Name
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span>Non ci sono ingredienti selezionati</span>
+                        }
+                    </p>
+                    <div class="card-subtitle">@Model.Description.</div>
+                    <hr class="card-divider">
+                    <div class="card-price text-center">
+                        <span>@Model.Price</span> €
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

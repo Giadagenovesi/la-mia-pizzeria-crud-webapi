@@ -1,0 +1,96 @@
+﻿@{
+
+    Layout = "_Layout";
+}     
+
+@model List<Pizza>
+<div class="container p-5">
+    <div class="row">
+        <div class="col-12">
+
+            <h1 class="my-5 text-center ms_main_title">ECCO UNA LISTA DI TUTTE LE TUE PIZZE</h1>
+
+            @if (User.IsInRole("ADMIN"))
+            {
+                <a class="btn my_btn btn-sm mb-5" href="@Url.Action("Aggiungi", "Pizza")">
+                    <i class="fa-solid fa-plus"></i> Aggiungi una nuova pizza
+                </a>
+            }
+
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Immagine</th>
+                        <th scope="col">Gusto</th>
+                        <th scope="col">Ingredienti</th>
+                        <th scope="col">Descrizione</th>
+                        <th scope="col">Categorie</th>
+                        <th scope="col">Prezzo</th>
+                        <th scope="col">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(Pizza pizza in Model)
+                    {
+                        <tr>
+                            <td scope="row">@pizza.Id</td>
+                            <td>
+                                <img src="@pizza.Image" />
+                            </td>
+                            <td>@pizza.Taste</td>
+                            <td>@pizza.Description</td>
+                            <td>
+                                @if(pizza.CategoryId != null)
+                                {
+                                    @pizza.Category?.Name
+                                } else
+                                {
+                                    <span>Nessuna categoria selezionata</span>
+                                }
+                            </td>
+                            <td>
+                                @if(pizza.Ingredients!= null && pizza.Ingredients.Count > 0)
+                                {
+                                <ul class=" d-flex align-items-center list-unstyled">
+                                    @foreach (Ingredient ingredient in pizza.Ingredients)
+                                    {
+                                        <li class="me-1">
+                                            @ingredient?.Name
+                                        </li>
+                                    }
+                                </ul>
+                                } else
+                                {
+                                    <span>Non ci sono ingredienti selezionati</span>
+                                }
+                            </td>
+                            <td>@pizza.Price€</td>
+                            <td>
+                                <a class="btn my_btn btn-sm" href="@Url.Action("Dettagli", "Pizza", new { id = pizza.Id })">
+                                    <i class="fa-solid fa-info mx-1"></i>
+                                </a>
+                                @if (User.IsInRole("ADMIN"))
+                                {
+                                    <a class="btn update_btn btn-sm" href="@Url.Action("Aggiorna", "Pizza", new { id = pizza.Id })">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </a>
+                                    <form asp-controller="Pizza" asp-action="Cancella" asp-route-id="@pizza.Id" method="post" class="fake_form">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn del_btn btn-sm">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                    
+                                }
+                                
+                            </td>
+                        </tr>
+                    }
+                    
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
