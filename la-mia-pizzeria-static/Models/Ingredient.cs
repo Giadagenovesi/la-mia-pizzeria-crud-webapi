@@ -1,7 +1,10 @@
-﻿namespace la_mia_pizzeria_static.Models
+﻿using System.Text.Json.Serialization;
+
+namespace la_mia_pizzeria_static.Models
 {
     public class Ingredient
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         public string Name { get; set; }
