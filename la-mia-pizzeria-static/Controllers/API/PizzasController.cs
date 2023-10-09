@@ -9,17 +9,22 @@ namespace la_mia_pizzeria_static.Controllers.API
     [ApiController]
     public class PizzasController : ControllerBase
     {
+        private PizzeriaContext _myDatabase;
+
+        public PizzasController(PizzeriaContext db)
+        {
+            _myDatabase = db;
+        }
 
         //Faccio una chiamata API che mi restituisce la lista di tutte le mie pizze
         [HttpGet]
         public IActionResult GetPizzas()
         {
-            using (PizzeriaContext db = new PizzeriaContext())
-            {
-                List<Pizza> pizzas = db.Pizzas.Include(pizza => pizza.Category).Include(pizza => pizza.Ingredients).ToList();
 
-                return Ok(pizzas);
-            }
+            List<Pizza> pizzas = _myDatabase.Pizzas.Include(pizza => pizza.Category).Include(pizza => pizza.Ingredients).ToList();
+
+            return Ok(pizzas);
+
         }
 
         //Faccio una chiamata API che mi restituisce la lista di tutte le mie pizze che contengono quella determinata stringa nel nome
@@ -31,30 +36,51 @@ namespace la_mia_pizzeria_static.Controllers.API
                 return BadRequest();
             }
 
-            using (PizzeriaContext db = new PizzeriaContext())
-            {
 
-                List<Pizza> pizzasResult = db.Pizzas.Where(Pizza => Pizza.Taste.ToLower().Contains(research.ToLower())).ToList();
 
-                return Ok(pizzasResult);
-            }
+            List<Pizza> pizzasResult = _myDatabase.Pizzas.Where(Pizza => Pizza.Taste.ToLower().Contains(research.ToLower())).ToList();
+
+            return Ok(pizzasResult);
+
         }
 
         //Faccio una chiamata API che mi restituisce la lista di tutte le mie pizze che contengono quella determinata stringa nel nome
         [HttpGet]
         public IActionResult GetPizzasById(int? id)
         {
-            if (id == null)
+
+
+
+            Pizza pizza = _myDatabase.Pizzas.Where(Pizza => Pizza.Id == id).Include(pizza => pizza.Category).Include(pizza => pizza.Ingredients).FirstOrDefault();
+
+
+            if (id != null)
             {
-                return BadRequest();
+                return Ok(pizza);
+            }
+            else
+            {
+                return NotFound();
             }
 
-            using (PizzeriaContext db = new PizzeriaContext())
+
+
+        }
+
+        //Creo una nuova pizza tramite chiamata API
+        [HttpPost]
+
+        public IActionResult CreateNewPizza([FromBody]Pizza newPizza) 
+        {
+            try
             {
+                _myDatabase.Pizzas.Add(newPizza);
+                _myDatabase.SaveChanges();
 
-                Pizza pizza = db.Pizzas.Where(Pizza => Pizza.Id == id).Include(pizza => pizza.Category).Include(pizza => pizza.Ingredients).FirstOrDefault();
-
-                return Ok(pizza);
+                return Ok();
+            } catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
     }
