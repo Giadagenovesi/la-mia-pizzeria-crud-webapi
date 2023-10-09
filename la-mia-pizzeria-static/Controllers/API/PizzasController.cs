@@ -39,6 +39,24 @@ namespace la_mia_pizzeria_static.Controllers.API
                 return Ok(pizzasResult);
             }
         }
+
+        //Faccio una chiamata API che mi restituisce la lista di tutte le mie pizze che contengono quella determinata stringa nel nome
+        [HttpGet]
+        public IActionResult GetPizzasById(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            using (PizzeriaContext db = new PizzeriaContext())
+            {
+
+                Pizza pizza = db.Pizzas.Where(Pizza => Pizza.Id == id).Include(pizza => pizza.Category).Include(pizza => pizza.Ingredients).FirstOrDefault();
+
+                return Ok(pizza);
+            }
+        }
     }
 
 }
