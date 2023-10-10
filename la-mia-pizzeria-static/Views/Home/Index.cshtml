@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="jumbotron d-flex align-items-center">
+    <div class="jt-logo d-flex align-items-center justify-content-center">
+        PIZZERIA DELLA MADONNA
+    </div>
+</div>
+
+<div class="pizzeria">
+    <div class="ms_container d-flex justify-content-between">
+        <img class="pizzeria_img mb-5" src="~/img/pizza-napoletana.jpg" alt="Immagine di pizza nel forno" />
+        <p class="slogan px-4">
+            Vieni a gustare la nostra pizza artigianale, con una varietà di ingredienti freschi e una crosta croccante. Un’esperienza culinaria che ti farà tornare per un altro morso!
+            <i class="fa-solid fa-pizza-slice"></i>
+        </p>
+    </div>
+</div>
+
+<div class="container py-5">
+    <hr />
+
+    <div class="row pb-5">
+
+        <h1 class="py-3 text-center ms_main_title">Il Nostro Menù</h1>
+
+        <div class="row">
+            <div class="col-12">
+                <h1>Lista delle pizze</h1>
+                <div>
+                    <input id="js_search_box" type="text" class="form-control my-3" placeholder="Cerca per nome pizza">
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-spinner" class="row ">
+            <div class="col-12 d-flex justify-content-center mb-3">
+                <div class="spinner-border" role="status">
+                </div>
+            </div>
+            <p class="text-center">Sto cercando le pizze disponibili...</p>
+        </div>
+
+        <div id="row-no-pizzas" class="row d-none">
+            <div class="col-12">
+                Nessuna pizza trovata!
+            </div>
+        </div>
+
+        <div id="list-of-pizzas" class="row d-none">
+            <!-- questo sontenitore verrà usato per mostrare le pizze trovate -->
+        </div>
+
+        
+    </div>
+    <hr />
+</div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        allPizzasList();
+        function allPizzasList() {
+            axios.get('/api/Pizzas/GetPizzas').then((resp) => {
+
+                console.log(resp);
+                let rowNoPizzas = document.getElementById("row-no-pizzas");
+                let loadingSpinnerElement = document.getElementById("loading-spinner");
+                let listOfPizzasElement = document.getElementById("list-of-pizzas");
+
+                if (resp.data.length == 0) {
+                    rowNoPizzas.classList.remove("d-none");
+                    loadingSpinnerElement.classList.add("d-none");
+                } else {
+
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOfPizzasElement.classList.remove("d-none");
+
+                    resp.data.forEach(pizza => {
+                        console.log(pizza);
+
+                        listOfPizzasElement.innerHTML +=
+                            `
+                                <div class="col-lg-4 col-md-6 col-sm-12 g-4">
+                                    <div class="card">
+                                        <div class="card-img">
+                                            <img src="${pizza.image}" alt="Immagine ${pizza.taste}" />
+                                        </div>
+                                        <hr class="card-divider">
+                                        <div class="my_card_container">
+                                            <div class="card-title">${pizza.taste}</div>
+                                            <div class="card-subtitle">${pizza.description}.</div>
+                                        </div>
+                                        <hr class="card-divider">
+                                        <div class="card-price text-center">
+                                            <span>${pizza.price}</span> €
+                                        </div>
+                                    </div>
+                                </div>
+                             `
+
+                    });
+                }
+            })
+            
+
+
+            
+        }
+
+    </script>
+
+}
