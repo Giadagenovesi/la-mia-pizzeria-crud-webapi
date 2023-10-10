@@ -27,9 +27,8 @@
 
         <div class="row">
             <div class="col-12">
-                <h1>Lista delle pizze</h1>
                 <div>
-                    <input id="js_search_box" type="text" class="form-control my-3" placeholder="Cerca per nome pizza">
+                    <input id="search_pizza" type="text" class="form-control my-3" placeholder="Cerca la pizza che desideri">
                 </div>
             </div>
         </div>
@@ -62,7 +61,21 @@
 
     <script type="text/javascript">
 
-        allPizzasList();
+       
+
+        document.getElementById("search_pizza").addEventListener('keyup', showResultByName);
+
+        function showResultByName() {
+            let searchString = document.getElementById("search_pizza").value;
+
+            if (searchString.length > 0) {
+                searchPizzas(searchString);
+
+            }else {
+                allPizzasList();
+            }
+        }
+
         function allPizzasList() {
             axios.get('/api/Pizzas/GetPizzas').then((resp) => {
 
@@ -79,37 +92,88 @@
                     loadingSpinnerElement.classList.add("d-none");
                     listOfPizzasElement.classList.remove("d-none");
 
+                    listOfPizzasElement.innerHTML = "";
+
                     resp.data.forEach(pizza => {
                         console.log(pizza);
 
                         listOfPizzasElement.innerHTML +=
                             `
-                                <div class="col-lg-4 col-md-6 col-sm-12 g-4">
-                                    <div class="card">
-                                        <div class="card-img">
-                                            <img src="${pizza.image}" alt="Immagine ${pizza.taste}" />
+                                        <div class="col-lg-4 col-md-6 col-sm-12 g-4">
+                                            <div class="card">
+                                                <div class="card-img">
+                                                    <img src="${pizza.image}" alt="Immagine ${pizza.taste}" />
+                                                </div>
+                                                <hr class="card-divider">
+                                                <div class="my_card_container">
+                                                    <div class="card-title">${pizza.taste}</div>
+                                                    <div class="card-subtitle">${pizza.description}.</div>
+                                                </div>
+                                                <hr class="card-divider">
+                                                <div class="card-price text-center">
+                                                    <span>${pizza.price}</span> €
+                                                </div>
+                                            </div>
                                         </div>
-                                        <hr class="card-divider">
-                                        <div class="my_card_container">
-                                            <div class="card-title">${pizza.taste}</div>
-                                            <div class="card-subtitle">${pizza.description}.</div>
-                                        </div>
-                                        <hr class="card-divider">
-                                        <div class="card-price text-center">
-                                            <span>${pizza.price}</span> €
-                                        </div>
-                                    </div>
-                                </div>
-                             `
+                            `
 
                     });
                 }
             })
-            
-
-
-            
         }
+
+        function searchPizzas(userSearch) {
+
+            axios.get('/api/Pizzas/GetPizzasByName', {
+                params: {
+                    research: userSearch
+                }
+            }).then((resp) => {
+
+                console.log(resp);
+                let rowNoPizzas = document.getElementById("row-no-pizzas");
+                let loadingSpinnerElement = document.getElementById("loading-spinner");
+                let listOfPizzasElement = document.getElementById("list-of-pizzas");
+
+                if (resp.data.length == 0) {
+                    rowNoPizzas.classList.remove("d-none");
+                    loadingSpinnerElement.classList.add("d-none");
+                } else {
+
+                    loadingSpinnerElement.classList.add("d-none");
+                    listOfPizzasElement.classList.remove("d-none");
+
+                    listOfPizzasElement.innerHTML = "";
+
+                    resp.data.forEach(pizza => {
+                        console.log(pizza);
+
+                        listOfPizzasElement.innerHTML +=
+                            `
+                                                <div class="col-lg-4 col-md-6 col-sm-12 g-4">
+                                                    <div class="card">
+                                                        <div class="card-img">
+                                                            <img src="${pizza.image}" alt="Immagine ${pizza.taste}" />
+                                                        </div>
+                                                        <hr class="card-divider">
+                                                        <div class="my_card_container">
+                                                            <div class="card-title">${pizza.taste}</div>
+                                                            <div class="card-subtitle">${pizza.description}.</div>
+                                                        </div>
+                                                        <hr class="card-divider">
+                                                        <div class="card-price text-center">
+                                                            <span>${pizza.price}</span> €
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             `
+
+                    });
+                }
+            })
+        }
+            
+               
 
     </script>
 
